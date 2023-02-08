@@ -392,7 +392,22 @@ Start by computing the states' average temperature. Use that measurement to clas
 - High: temp >= 25
 
 ```{r}
+# Find the median station per state
+met_avg_temp_by_state_lz <- met_lz |>
+  group_by(STATE) |>
+  summarise(
+    across(
+      c(temp),
+      function(x) mean(x, na.rm = TRUE)
+    )
+  )
 
+
+  
+met_avg_temp_by_state_lz <- met_avg_temp_by_state_lz |> mutate(avg_temp =
+  ifelse(met_avg_temp_by_state_lz$temp < 20, 'low', ifelse(met_avg_temp_by_state_lz$temp < 25, 'Mid', 'High')))
+
+met_avg_temp_by_state_lz
 ```
 
 Once you are done with that, you can compute the following:

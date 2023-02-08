@@ -261,7 +261,7 @@ met_avg_by_USAFID <- merge(
 )
 
 # Now each row have the average statistics for each weather stations, and the median statistics for their respective state.
-met_avg_by_USAFID
+# met_avg_by_USAFID
 
 # We can now calculate the Euclidean distance between each weather station's mean and their states' median statistics.
 met_avg_by_USAFID <- met_avg_by_USAFID |>

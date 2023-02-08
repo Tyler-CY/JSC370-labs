@@ -144,52 +144,52 @@ library(mgcv)
     the stations data:
 
 ``` r
-# Where are we getting the data from
-met_url <- "https://github.com/JSC370/jsc370-2023/blob/main/labs/lab03/met_all.gz"
-# Downloading the data to a tempfile (so it is destroyed afterwards)
-# you can replace this with, for example, your own data:
-# tmp <- tempfile(fileext = ".gz")
-tmp <- "met.gz"
-# We sould be downloading this, ONLY IF this was not downloaded already.
-# otherwise is just a waste of time.
-if (!file.exists(tmp)) {
- download.file(
- url = met_url,
- destfile = tmp,
-# method = "libcurl", timeout = 1000 (you may need this option)
- )
-}
+fn <- "https://raw.githubusercontent.com/JSC370/jsc370-2023/main/labs/lab03/met_all.gz"
+if (!file.exists("met_all.gz"))
+  download.file(fn, destfile = "met_all.gz")
+met <- data.table::fread("met_all.gz")
 
-
-dat <- data.table::fread(tmp)
+head(met)
 ```
 
-    ## Warning in data.table::fread(tmp): Detected 2 column names but the data has 3
-    ## columns (i.e. invalid file). Added 1 extra default column name for the first
-    ## column which is guessed to be row names or an index. Use setnames() afterwards
-    ## if this guess is not correct, or fix the file write command that created the
-    ## file to create a valid file.
-
-    ## Warning in data.table::fread(tmp): Stopped early on line 16. Expected 3
-    ## fields but found 4. Consider fill=TRUE and comment.char=. First discarded
-    ## non-empty line: <<<link rel="preconnect" href="https://github.githubassets.com"
-    ## crossorigin>>>
-
-``` r
-head(dat)
-```
-
-    ##       V1              <meta                                   charset="utf-8">
-    ## 1: <link rel="dns-prefetch"            href="https://github.githubassets.com">
-    ## 2: <link rel="dns-prefetch"      href="https://avatars.githubusercontent.com">
-    ## 3: <link rel="dns-prefetch"      href="https://github-cloud.s3.amazonaws.com">
-    ## 4: <link rel="dns-prefetch" href="https://user-images.githubusercontent.com/">
+    ##    USAFID  WBAN year month day hour min  lat      lon elev wind.dir wind.dir.qc
+    ## 1: 690150 93121 2019     8   1    0  56 34.3 -116.166  696      220           5
+    ## 2: 690150 93121 2019     8   1    1  56 34.3 -116.166  696      230           5
+    ## 3: 690150 93121 2019     8   1    2  56 34.3 -116.166  696      230           5
+    ## 4: 690150 93121 2019     8   1    3  56 34.3 -116.166  696      210           5
+    ## 5: 690150 93121 2019     8   1    4  56 34.3 -116.166  696      120           5
+    ## 6: 690150 93121 2019     8   1    5  56 34.3 -116.166  696       NA           9
+    ##    wind.type.code wind.sp wind.sp.qc ceiling.ht ceiling.ht.qc ceiling.ht.method
+    ## 1:              N     5.7          5      22000             5                 9
+    ## 2:              N     8.2          5      22000             5                 9
+    ## 3:              N     6.7          5      22000             5                 9
+    ## 4:              N     5.1          5      22000             5                 9
+    ## 5:              N     2.1          5      22000             5                 9
+    ## 6:              C     0.0          5      22000             5                 9
+    ##    sky.cond vis.dist vis.dist.qc vis.var vis.var.qc temp temp.qc dew.point
+    ## 1:        N    16093           5       N          5 37.2       5      10.6
+    ## 2:        N    16093           5       N          5 35.6       5      10.6
+    ## 3:        N    16093           5       N          5 34.4       5       7.2
+    ## 4:        N    16093           5       N          5 33.3       5       5.0
+    ## 5:        N    16093           5       N          5 32.8       5       5.0
+    ## 6:        N    16093           5       N          5 31.1       5       5.6
+    ##    dew.point.qc atm.press atm.press.qc       rh
+    ## 1:            5    1009.9            5 19.88127
+    ## 2:            5    1010.3            5 21.76098
+    ## 3:            5    1010.6            5 18.48212
+    ## 4:            5    1011.6            5 16.88862
+    ## 5:            5    1012.7            5 17.38410
+    ## 6:            5    1012.7            5 20.01540
 
 ``` r
 # Download the data
 stations <- fread("ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-history.csv")
 stations[, USAF := as.integer(USAF)]
+```
 
+    ## Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion
+
+``` r
 # Dealing with NAs and 999999
 stations[, USAF   := fifelse(USAF == 999999, NA_integer_, USAF)]
 stations[, CTRY   := fifelse(CTRY == "", NA_character_, CTRY)]
@@ -209,19 +209,29 @@ stations <- stations[n == 1,][, n := NULL]
 3.  Merge the data as we did during the lecture.
 
 ``` r
-# merge(
-# # Data
-#  x = dat,
-#  y = stations,
-# # List of variables to match
-#  by.x = "USAFID",
-#  by.y = "USAF",
-# # Which obs to keep?
-#  all.x = TRUE,
-#  all.y = FALSE
-#  ) %>% nrow()
-# 
-# head(dat[, list(USAFID, WBAN, STATE)], n = 4)
+met <- merge(
+# Data
+ x = met,
+ y = stations,
+# List of variables to match
+ by.x = "USAFID",
+ by.y = "USAF",
+# Which obs to keep?
+ all.x = TRUE,
+ all.y = FALSE
+ )
+
+head(met[, list(USAFID, WBAN, STATE)], n = 4)
+```
+
+    ##    USAFID  WBAN STATE
+    ## 1: 690150 93121    CA
+    ## 2: 690150 93121    CA
+    ## 3: 690150 93121    CA
+    ## 4: 690150 93121    CA
+
+``` r
+met_lz <- lazy_dt(met, immutable= FALSE)
 ```
 
 ## Question 1: Representative station for the US
@@ -230,6 +240,103 @@ Across all weather stations, what is the median station in terms of
 temperature, wind speed, and atmospheric pressure? Look for the three
 weather stations that best represent continental US using the
 `quantile()` function. Do these three coincide?
+
+``` r
+met_avg_lz <- met_lz |>
+  group_by(USAFID) |>
+  summarise(
+    across(
+      c(temp, wind.sp, atm.press, lat, lon),
+      function(x) mean(x, na.rm = TRUE)
+    )
+    
+    # temp = mean(temp, na.rm = TRUE),
+    # wind.sp = mean(wind.sp, na.rm = TRUE),
+    # atm.press = mean(atm.press, na.rm = TRUE)
+  )
+```
+
+``` r
+# Find medians of temp, wind.sp, atm.press
+met_med_lz <- met_avg_lz |>
+  summarise(across(
+    2:4,
+    function(x) quantile(x, probs = .5, na.rm = TRUE)
+  ))
+
+met_med_lz
+```
+
+    ## Source: local data table [1 x 3]
+    ## Call:   `_DT1`[, .(temp = (function (x) 
+    ## mean(x, na.rm = TRUE))(temp), wind.sp = (function (x) 
+    ## mean(x, na.rm = TRUE))(wind.sp), atm.press = (function (x) 
+    ## mean(x, na.rm = TRUE))(atm.press), lat = (function (x) 
+    ## mean(x, na.rm = TRUE))(lat), lon = (function (x) 
+    ## mean(x, na.rm = TRUE))(lon)), keyby = .(USAFID)][, .(temp = (function (x) 
+    ## quantile(x, probs = 0.5, na.rm = TRUE))(temp), wind.sp = (function (x) 
+    ## quantile(x, probs = 0.5, na.rm = TRUE))(wind.sp), atm.press = (function (x) 
+    ## quantile(x, probs = 0.5, na.rm = TRUE))(atm.press))]
+    ## 
+    ##    temp wind.sp atm.press
+    ##   <dbl>   <dbl>     <dbl>
+    ## 1  23.7    2.46     1015.
+    ## 
+    ## # Use as.data.table()/as.data.frame()/as_tibble() to access results
+
+``` r
+# met_avg_lz |>
+#   filter(
+#     temp == met_med_lz |> pull(temp) |
+#     wind.sp == met_med_lz |> pull(wind.sp) |
+#     atm.press == met_med_lz |> pull(atm.press)
+#   )
+
+# temperature
+temp_us_id <- met_avg_lz |>
+  mutate(d = abs(temp - met_med_lz |> pull(temp))) |>
+  arrange(d) |>
+  slice(1) |>
+  pull(USAFID)
+
+# wind speed
+wsp_us_id <- met_avg_lz |>
+  mutate(d = abs(wind.sp - met_med_lz |> pull(wind.sp))) |>
+  arrange(d) |>
+  slice(1) |>
+  pull(USAFID)
+
+# atm speed
+atm_us_id <- met_avg_lz |>
+  mutate(d = abs(atm.press - met_med_lz |> pull(atm.press))) |>
+  arrange(d) |>
+  slice(1) |>
+  pull(USAFID)
+```
+
+``` r
+met_avg_lz |>
+  select(USAFID, lon, lat) |>
+  distinct() |> 
+  filter(USAFID %in% c(temp_us_id, wsp_us_id, atm_us_id))
+```
+
+    ## Source: local data table [3 x 3]
+    ## Call:   unique(`_DT1`[, .(temp = (function (x) 
+    ## mean(x, na.rm = TRUE))(temp), wind.sp = (function (x) 
+    ## mean(x, na.rm = TRUE))(wind.sp), atm.press = (function (x) 
+    ## mean(x, na.rm = TRUE))(atm.press), lat = (function (x) 
+    ## mean(x, na.rm = TRUE))(lat), lon = (function (x) 
+    ## mean(x, na.rm = TRUE))(lon)), keyby = .(USAFID)][, .(USAFID, 
+    ##     lon, lat)])[USAFID %in% c(temp_us_id, wsp_us_id, atm_us_id)]
+    ## 
+    ##   USAFID   lon   lat
+    ##    <int> <dbl> <dbl>
+    ## 1 720458 -82.6  37.8
+    ## 2 720929 -92.0  45.5
+    ## 3 722238 -85.7  31.3
+    ## 
+    ## # Use as.data.table()/as.data.frame()/as_tibble() to access results
 
 Knit the document, commit your changes, and save it on GitHub. Don’t
 forget to add `README.md` to the tree, the first time you render it.

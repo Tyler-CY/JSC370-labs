@@ -2,6 +2,9 @@
 title: "Lab 05 - Data Wrangling"
 output: 
   github_document: default
+  
+always_allow_html: true
+leafletmap: true
 #   tufte::tufte_html:
 #     css: style.css
 # link-citations: yes
@@ -96,6 +99,7 @@ library(dtplyr)
 library(dplyr)
 library(ggplot2)
 library(mgcv)
+library(leaflet)
 ```
 
 2. Load the met data from https://github.com/JSC370/jsc370-2023/blob/main/labs/lab03/met_all.gz or  (Use https://raw.githubusercontent.com/JSC370/jsc370-2023/main/labs/lab03/met_all.gz to download programmatically), and also the station data. For the latter, you can use the code we used during lecture to pre-process the stations data:
@@ -204,10 +208,12 @@ atm_us_id <- met_avg_lz |>
 ```
 
 ```{r}
-met_avg_lz |>
+met_avg_lz_q1 <- met_avg_lz |>
   select(USAFID, lon, lat) |>
   distinct() |> 
   filter(USAFID %in% c(temp_us_id, wsp_us_id, atm_us_id))
+
+met_avg_lz_q1
 ```
 
 Knit the document, commit your changes, and save it on GitHub. Don't forget to add `README.md` to the tree, the first time you render it.
@@ -267,10 +273,11 @@ met_avg_by_USAFID <- merge(
 met_avg_by_USAFID <- met_avg_by_USAFID |>
   mutate(d = (temp.x - temp.y)^2 + (wind.sp.x - wind.sp.y)^2 + (atm.press.x - atm.press.y)^2) 
 
-met_avg_by_USAFID |>
+met_avg_by_USAFID <- met_avg_by_USAFID |>
   group_by(STATE) |>
   slice(which.min(d))
 
+met_avg_by_USAFID
 ```
 
 From the table above, it shows the weather station ID (USAFID) which has the most similar statistics to the median of each state. 
@@ -282,6 +289,93 @@ Knit the doc and save it on GitHub.
 For each state, identify what is the station that is closest to the mid-point of the state. Combining these with the stations you identified in the previous question, use `leaflet()` to visualize all ~100 points in the same figure, applying different colors for those identified in this question.
 
 ```{r}
+# Find the mid-point of each state.
+
+states_mid_pts <- met |>
+  group_by(STATE) |>
+  summarise(
+    across(
+      c(lat, lon),
+      function(x) mean(x, na.rm = TRUE)
+    )
+  ) 
+
+as.data.table(states_mid_pts)
+
+# Find the lat and lon for each station
+met_lat_lon <- met |> 
+  group_by(USAFID) |>
+  summarise(
+    across(
+      c(lat, lon),
+      function(x) median(x)
+    )
+  )
+
+# Add State to met_by_USAFID
+met_lat_lon <- merge(
+ x = met_lat_lon,
+ y = stations,
+ by.x = "USAFID",
+ by.y = "USAF",
+ all.x = TRUE,
+ all.y = FALSE
+ )
+
+# Further merge the with states_mid_pts so we can compare the mid point and the location later.
+met_lat_lon <- merge(
+  x = met_lat_lon,
+  y = states_mid_pts,
+  by.x = "STATE",
+  by.y = "STATE",
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+# Find the weather stations closest to the midpoint of their respective states.
+met_lat_lon <- met_lat_lon |>
+  mutate(d = abs(lat.x - lat.y) + abs(lon.x - lon.y)) 
+
+met_lat_lon <- met_lat_lon |>
+  group_by(STATE) |>
+  slice(which.min(d))
+
+met_lat_lon[1:4]
+```
+
+```{r}
+# Create 1 table for Q1, Q2, Q3
+# Q1
+met_avg_lz_q1 <- as.data.table(met_avg_lz_q1)
+met_avg_lz_q1$type <- 'Closest Temp/Wind.sp/Atm.press'
+
+# Q2
+met_avg_by_USAFID <- met_avg_by_USAFID[c("USAFID", "lat.x", "lon.x")]
+colnames(met_avg_by_USAFID) <- c('USAFID', 'lat', 'lon')
+# Add a label
+met_avg_by_USAFID$type <- 'Closest Euclidean'
+
+# Q3
+met_lat_lon <- met_lat_lon[c('USAFID', 'lat.x', 'lon.x')]
+colnames(met_lat_lon) <- c('USAFID', 'lat', 'lon')
+# Add a label
+met_lat_lon$type <- 'Mid-Point'
+
+# Join the dataset
+q3_points <- rbind(as.data.table(met_avg_lz_q1), as.data.table(met_avg_by_USAFID), as.data.table(met_lat_lon))
+
+pal <- colorFactor(
+  palette = c('red', 'green', 'blue'),
+  domain = q3_points$type
+)
+
+leaflet(q3_points) %>%
+  addProviderTiles('OpenStreetMap') |>
+  addCircles(lat = ~lat, lng = ~lon, color = ~pal(type),
+             label = ~type,
+             opacity = 1, fillOpacity = 1, radius = 500) |>
+  addLegend(position = 'topleft', values = ~type, pal=pal)
+  
 
 ```
 

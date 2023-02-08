@@ -135,6 +135,10 @@ library(mgcv)
 
     ## This is mgcv 1.8-41. For overview type 'help("mgcv-package")'.
 
+``` r
+library(leaflet)
+```
+
 2.  Load the met data from
     <https://github.com/JSC370/jsc370-2023/blob/main/labs/lab03/met_all.gz>
     or (Use
@@ -304,10 +308,12 @@ atm_us_id <- met_avg_lz |>
 ```
 
 ``` r
-met_avg_lz |>
+met_avg_lz_q1 <- met_avg_lz |>
   select(USAFID, lon, lat) |>
   distinct() |> 
   filter(USAFID %in% c(temp_us_id, wsp_us_id, atm_us_id))
+
+met_avg_lz_q1
 ```
 
     ## Source: local data table [3 x 3]
@@ -388,9 +394,11 @@ met_avg_by_USAFID <- merge(
 met_avg_by_USAFID <- met_avg_by_USAFID |>
   mutate(d = (temp.x - temp.y)^2 + (wind.sp.x - wind.sp.y)^2 + (atm.press.x - atm.press.y)^2) 
 
-met_avg_by_USAFID |>
+met_avg_by_USAFID <- met_avg_by_USAFID |>
   group_by(STATE) |>
   slice(which.min(d))
+
+met_avg_by_USAFID
 ```
 
     ## # A tibble: 46 × 14
@@ -423,6 +431,167 @@ mid-point of the state. Combining these with the stations you identified
 in the previous question, use `leaflet()` to visualize all \~100 points
 in the same figure, applying different colors for those identified in
 this question.
+
+``` r
+# Find the mid-point of each state.
+
+states_mid_pts <- met |>
+  group_by(STATE) |>
+  summarise(
+    across(
+      c(lat, lon),
+      function(x) mean(x, na.rm = TRUE)
+    )
+  ) 
+
+as.data.table(states_mid_pts)
+```
+
+    ##     STATE      lat        lon
+    ##  1:    AL 32.75554  -86.65318
+    ##  2:    AR 35.18904  -92.68849
+    ##  3:    AZ 33.91659 -111.54154
+    ##  4:    CA 36.50457 -120.03186
+    ##  5:    CO 39.12441 -105.69753
+    ##  6:    CT 41.48119  -72.71733
+    ##  7:    DE 39.15950  -75.47708
+    ##  8:    FL 28.33518  -82.39921
+    ##  9:    GA 32.56718  -83.33168
+    ## 10:    IA 41.85552  -93.49382
+    ## 11:    ID 45.02638 -115.17229
+    ## 12:    IL 40.22512  -88.81862
+    ## 13:    IN 40.51988  -86.33665
+    ## 14:    KS 38.32236  -97.96264
+    ## 15:    KY 37.50187  -85.11900
+    ## 16:    LA 30.51183  -91.71927
+    ## 17:    MA 42.03785  -70.99897
+    ## 18:    MD 39.06089  -76.82664
+    ## 19:    ME 44.60213  -69.57403
+    ## 20:    MI 43.41830  -84.69928
+    ## 21:    MN 45.23699  -94.31785
+    ## 22:    MO 38.28066  -92.75603
+    ## 23:    MS 33.05395  -89.77502
+    ## 24:    MT 45.81591 -108.98264
+    ## 25:    NC 35.55578  -79.17800
+    ## 26:    ND 47.75992 -100.08523
+    ## 27:    NE 41.26627  -98.59109
+    ## 28:    NH 43.54523  -71.55302
+    ## 29:    NJ 40.31345  -74.47269
+    ## 30:    NM 34.30261 -105.89839
+    ## 31:    NV 38.68753 -117.21082
+    ## 32:    NY 42.40904  -75.50851
+    ## 33:    OH 40.40494  -82.94026
+    ## 34:    OK 35.55121  -97.15465
+    ## 35:    OR 43.31317 -122.79527
+    ## 36:    PA 40.62764  -77.62156
+    ## 37:    RI 41.62342  -71.49612
+    ## 38:    SC 33.92152  -80.79047
+    ## 39:    SD 44.22241  -99.86385
+    ## 40:    TN 35.70926  -86.55706
+    ## 41:    TX 31.12371  -98.01178
+    ## 42:    UT 39.38740 -112.33426
+    ## 43:    VA 37.54765  -78.21585
+    ## 44:    VT 44.35726  -72.58793
+    ## 45:    WA 47.41976 -122.56157
+    ## 46:    WI 44.46353  -89.93145
+    ## 47:    WV 38.72488  -80.58560
+    ## 48:    WY 42.72014 -108.18546
+    ##     STATE      lat        lon
+
+``` r
+# Find the lat and lon for each station
+met_lat_lon <- met |> 
+  group_by(USAFID) |>
+  summarise(
+    across(
+      c(lat, lon),
+      function(x) median(x)
+    )
+  )
+
+# Add State to met_by_USAFID
+met_lat_lon <- merge(
+ x = met_lat_lon,
+ y = stations,
+ by.x = "USAFID",
+ by.y = "USAF",
+ all.x = TRUE,
+ all.y = FALSE
+ )
+
+# Further merge the with states_mid_pts so we can compare the mid point and the location later.
+met_lat_lon <- merge(
+  x = met_lat_lon,
+  y = states_mid_pts,
+  by.x = "STATE",
+  by.y = "STATE",
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+# Find the weather stations closest to the midpoint of their respective states.
+met_lat_lon <- met_lat_lon |>
+  mutate(d = abs(lat.x - lat.y) + abs(lon.x - lon.y)) 
+
+met_lat_lon <- met_lat_lon |>
+  group_by(STATE) |>
+  slice(which.min(d))
+
+met_lat_lon[1:4]
+```
+
+    ## # A tibble: 48 × 4
+    ## # Groups:   STATE [48]
+    ##    STATE USAFID lat.x  lon.x
+    ##    <chr>  <int> <dbl>  <dbl>
+    ##  1 AL    722300  33.2  -86.8
+    ##  2 AR    723429  35.3  -93.1
+    ##  3 AZ    723745  34.3 -111. 
+    ##  4 CA    723890  36.8 -120. 
+    ##  5 CO    726396  39.0 -106. 
+    ##  6 CT    725027  41.5  -72.8
+    ##  7 DE    724088  39.1  -75.5
+    ##  8 FL    722014  28.5  -82.5
+    ##  9 GA    722175  32.6  -83.6
+    ## 10 IA    725466  41.7  -93.6
+    ## # … with 38 more rows
+
+``` r
+# Create 1 table for Q1, Q2, Q3
+# Q1
+met_avg_lz_q1 <- as.data.table(met_avg_lz_q1)
+met_avg_lz_q1$type <- 'Closest Temp/Wind.sp/Atm.press'
+
+# Q2
+met_avg_by_USAFID <- met_avg_by_USAFID[c("USAFID", "lat.x", "lon.x")]
+colnames(met_avg_by_USAFID) <- c('USAFID', 'lat', 'lon')
+# Add a label
+met_avg_by_USAFID$type <- 'Closest Euclidean'
+
+# Q3
+met_lat_lon <- met_lat_lon[c('USAFID', 'lat.x', 'lon.x')]
+colnames(met_lat_lon) <- c('USAFID', 'lat', 'lon')
+# Add a label
+met_lat_lon$type <- 'Mid-Point'
+
+# Join the dataset
+q3_points <- rbind(as.data.table(met_avg_lz_q1), as.data.table(met_avg_by_USAFID), as.data.table(met_lat_lon))
+
+pal <- colorFactor(
+  palette = c('red', 'green', 'blue'),
+  domain = q3_points$type
+)
+
+leaflet(q3_points) %>%
+  addProviderTiles('OpenStreetMap') |>
+  addCircles(lat = ~lat, lng = ~lon, color = ~pal(type),
+             label = ~type,
+             opacity = 1, fillOpacity = 1, radius = 500) |>
+  addLegend(position = 'topleft', values = ~type, pal=pal)
+```
+
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-99695005aeb8a7e00348" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-99695005aeb8a7e00348">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["OpenStreetMap",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircles","args":[[37.751,45.506,31.3498977635783,33.9671876892028,35.831000967118,32.1669504405286,33.6799826839827,39.2299831121833,41.7360101010101,39.6740047984645,30.483,31.536,42.5535839285714,42.5420088495575,41.4632502351834,40.412,37.7460056980057,37.9003206568712,32.5159599542334,41.9099972527472,38.341,44.45,42.223,45.5430087241003,37.152,31.1829822852081,47.049,36.134,41.764,43.626,40.033,35.0399900722022,40.0679923664122,42.642987628866,40.708,36.1991113105925,42.1470528169014,41.3338032388664,41.5329991281604,33.9646951983298,45.443765323993,35.5930237288136,29.7089922705314,40.7208916129032,36.7829185520362,42.8939918699187,44.929,39.643,44.381,33.178,35.258,34.257,36.78,39.05,41.51,39.133,28.474,32.633,41.691,44.889,40.483,40.711,38.065,37.578,30.558,41.876,38.981,44.533,43.322,45.147,37.974,32.321,45.807,35.582,48.39,40.961,43.567,40.277,35.003,38.051,42.207,40.28,35.417,42.381,40.85,41.597,33.967,44.381,36.009,31.106,40.219,37.358,44.204,47.104,44.359,39,43.064],[-82.637,-91.981,-85.6666677316294,-86.0831876892028,-90.646,-110.883,-117.866008658009,-106.869998793727,-72.6509797979798,-75.6060009596929,-86.5173010130246,-82.507,-92.4008803571429,-113.766053097345,-90.5203170272813,-86.937,-97.221,-85.9672290406223,-92.04097597254,-70.729,-75.513,-68.3667746192893,-83.7440037453184,-94.0510196292257,-94.4950114942529,-90.4710035429584,-109.457023863636,-80.222,-96.178,-72.3049961389961,-74.3501562130177,-106.615435920578,-118.568984732824,-77.055993814433,-84.027,-95.8865547576302,-121.724052816901,-75.7249967611336,-71.2829991281604,-80.8000501043841,-98.413442206655,-88.9169966101695,-98.0459922705314,-114.034783225806,-76.4499728506787,-73.2489918699187,-89.628,-79.916,-106.721002247191,-86.782,-93.095,-111.339,-119.719,-105.51,-72.828,-75.467,-82.454,-83.6,-93.566,-116.101,-88.95,-86.375,-97.861,-84.77,-92.099,-71.021,-76.922,-69.667,-84.688,-94.507,-92.691,-90.078,-108.542,-79.101,-100.024,-98.314,-71.433,-74.816,-105.662,-117.09,-75.98,-83.115,-97.383,-122.872,-77.85,-71.412,-80.8,-100.285,-86.52,-98.196,-111.723,-78.438,-72.562,-122.287,-89.837,-80.274,-108.458],500,null,null,{"interactive":true,"className":"","stroke":true,"color":["#00FF00","#00FF00","#00FF00","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF"],"weight":5,"opacity":1,"fill":true,"fillColor":["#00FF00","#00FF00","#00FF00","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF"],"fillOpacity":1},null,null,["Closest Temp/Wind.sp/Atm.press","Closest Temp/Wind.sp/Atm.press","Closest Temp/Wind.sp/Atm.press","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addLegend","args":[{"colors":["#FF0000","#00FF00","#0000FF"],"labels":["Closest Euclidean","Closest Temp/Wind.sp/Atm.press","Mid-Point"],"na_color":null,"na_label":"NA","opacity":0.5,"position":"topleft","type":"factor","title":"type","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[28.474,48.39],"lng":[-122.872,-68.3667746192893]}},"evals":[],"jsHooks":[]}</script>
 
 Knit the doc and save it on GitHub.
 

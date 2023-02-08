@@ -157,6 +157,7 @@ met_lz <- lazy_dt(met, immutable= FALSE)
 Across all weather stations, what is the median station in terms of temperature, wind speed, and atmospheric pressure? Look for the three weather stations that best represent continental US using the `quantile()` function. Do these three coincide?
 
 ```{r}
+
 met_avg_lz <- met_lz |>
   group_by(USAFID) |>
   summarise(
@@ -164,10 +165,6 @@ met_avg_lz <- met_lz |>
       c(temp, wind.sp, atm.press, lat, lon),
       function(x) mean(x, na.rm = TRUE)
     )
-    
-    # temp = mean(temp, na.rm = TRUE),
-    # wind.sp = mean(wind.sp, na.rm = TRUE),
-    # atm.press = mean(atm.press, na.rm = TRUE)
   )
 ```
 
@@ -183,13 +180,6 @@ met_med_lz
 ```
 
 ```{r}
-# met_avg_lz |>
-#   filter(
-#     temp == met_med_lz |> pull(temp) |
-#     wind.sp == met_med_lz |> pull(wind.sp) |
-#     atm.press == met_med_lz |> pull(atm.press)
-#   )
-
 # temperature
 temp_us_id <- met_avg_lz |>
   mutate(d = abs(temp - met_med_lz |> pull(temp))) |>
@@ -228,7 +218,62 @@ Just like the previous question, you are asked to identify what is the most repr
 
 ```{r}
 
+# Find the median station per state
+met_avg_by_state_lz <- met_lz |>
+  group_by(STATE) |>
+  summarise(
+    across(
+      c(temp, wind.sp, atm.press, lat, lon),
+      function(x) mean(x, na.rm = TRUE)
+    )
+  )
+
+
+# Summarise the mean by USAFID (i.e. by weather stations)
+met_avg_by_USAFID <- met |>
+  group_by(USAFID) |>
+  summarise(
+    across(
+      c(temp, wind.sp, atm.press, lat, lon),
+      function(x) mean(x, na.rm = TRUE)
+    )
+  )
+
+# Add State to met_by_USAFID
+met_avg_by_USAFID <- merge(
+ x = met_avg_by_USAFID,
+ y = stations,
+ by.x = "USAFID",
+ by.y = "USAF",
+ all.x = TRUE,
+ all.y = FALSE
+ )
+
+
+# Further merge the median statistics by state to the average statistics by USAFID
+met_avg_by_USAFID <- merge(
+  x = met_avg_by_USAFID,
+  y = met_avg_by_state_lz,
+  by.x = "STATE",
+  by.y = "STATE",
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+# Now each row have the average statistics for each weather stations, and the median statistics for their respective state.
+met_avg_by_USAFID
+
+# We can now calculate the Euclidean distance between each weather station's mean and their states' median statistics.
+met_avg_by_USAFID <- met_avg_by_USAFID |>
+  mutate(d = (temp.x - temp.y)^2 + (wind.sp.x - wind.sp.y)^2 + (atm.press.x - atm.press.y)^2) 
+
+met_avg_by_USAFID |>
+  group_by(STATE) |>
+  slice(which.min(d))
+
 ```
+
+From the table above, it shows the weather station ID (USAFID) which has the most similar statistics to the median of each state. 
 
 Knit the doc and save it on GitHub.
 

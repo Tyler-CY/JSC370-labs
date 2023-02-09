@@ -1,8 +1,11 @@
 ---
 title: "Lab 05 - Data Wrangling"
 output: 
-  github_document: default
   
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+  github_document: default
 always_allow_html: true
 leafletmap: true
 #   tufte::tufte_html:
@@ -397,17 +400,15 @@ met_avg_temp_by_state_lz <- met_lz |>
   group_by(STATE) |>
   summarise(
     across(
-      c(temp),
+      c(temp, wind.sp, atm.press),
       function(x) mean(x, na.rm = TRUE)
     )
   )
 
 
-  
-met_avg_temp_by_state_lz <- met_avg_temp_by_state_lz |> mutate(avg_temp =
-  ifelse(met_avg_temp_by_state_lz$temp < 20, 'low', ifelse(met_avg_temp_by_state_lz$temp < 25, 'Mid', 'High')))
+met_avg_temp_by_state_lz <- 
+  met_avg_temp_by_state_lz |> mutate(avg_temp := ifelse(temp < 20, 'low', ifelse(temp < 25, 'Mid', 'High')))
 
-met_avg_temp_by_state_lz
 ```
 
 Once you are done with that, you can compute the following:
@@ -421,7 +422,57 @@ Once you are done with that, you can compute the following:
 All by the levels described before.
 
 ```{r}
+# Merge the data created above with the whole dataset
+met_avg_lz_w_state <- merge(
+ x = met_avg_lz,
+ y = stations,
+ by.x = "USAFID",
+ by.y = "USAF",
+ all.x = TRUE,
+ all.y = FALSE
+ )
 
+# Merge again with the summary table above.
+met_avg_lz_w_state <- merge(
+ x = met_avg_lz_w_state,
+ y = met_avg_temp_by_state_lz,
+ by.x = "STATE",
+ by.y = "STATE",
+ all.x = TRUE,
+ all.y = FALSE
+ )
+
+q4_result <- met_avg_lz_w_state |>
+  group_by(avg_temp) |>
+  summarise(no_of_states = n_distinct(STATE), no_of_stations = n_distinct(USAFID), no_of_na = sum(is.na(temp.x) + is.na(wind.sp.x) + is.na(atm.press.x)), mean_temp = mean(temp.x, na.rm=T), mean_wind.sp = mean(wind.sp.x, na.rm=T), mean_atm.press = mean(atm.press.x, na.rm=T))
+
+
+# We also need to count number of total entries
+total_lz <- met
+
+state_avg_temp <- met_avg_temp_by_state_lz |> select('STATE', 'avg_temp')
+
+total_lz <- merge(
+  x = total_lz,
+  y = state_avg_temp,
+  by.x = 'STATE',
+  by.y = 'STATE',
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+count_by_avg_temp <- total_lz |>
+  group_by(avg_temp) |>
+  summarise(count = n())
+
+
+q4_result <- 
+  merge(
+  x = q4_result,
+  y = count_by_avg_temp,
+  by.x = 'avg_temp',
+  by.y = 'avg_temp'
+)
 ```
 
 Knit the document, commit your changes, and push them to GitHub. 

@@ -1,5 +1,17 @@
-Lab 05 - Data Wrangling
-================
+---
+title: "Lab 05 - Data Wrangling"
+output: 
+  
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+  github_document: default
+always_allow_html: true
+leafletmap: true
+#   tufte::tufte_html:
+#     css: style.css
+# link-citations: yes
+---
 
 # Learning goals
 
@@ -590,8 +602,8 @@ leaflet(q3_points) %>%
   addLegend(position = 'topleft', values = ~type, pal=pal)
 ```
 
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-99695005aeb8a7e00348" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-99695005aeb8a7e00348">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["OpenStreetMap",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircles","args":[[37.751,45.506,31.3498977635783,33.9671876892028,35.831000967118,32.1669504405286,33.6799826839827,39.2299831121833,41.7360101010101,39.6740047984645,30.483,31.536,42.5535839285714,42.5420088495575,41.4632502351834,40.412,37.7460056980057,37.9003206568712,32.5159599542334,41.9099972527472,38.341,44.45,42.223,45.5430087241003,37.152,31.1829822852081,47.049,36.134,41.764,43.626,40.033,35.0399900722022,40.0679923664122,42.642987628866,40.708,36.1991113105925,42.1470528169014,41.3338032388664,41.5329991281604,33.9646951983298,45.443765323993,35.5930237288136,29.7089922705314,40.7208916129032,36.7829185520362,42.8939918699187,44.929,39.643,44.381,33.178,35.258,34.257,36.78,39.05,41.51,39.133,28.474,32.633,41.691,44.889,40.483,40.711,38.065,37.578,30.558,41.876,38.981,44.533,43.322,45.147,37.974,32.321,45.807,35.582,48.39,40.961,43.567,40.277,35.003,38.051,42.207,40.28,35.417,42.381,40.85,41.597,33.967,44.381,36.009,31.106,40.219,37.358,44.204,47.104,44.359,39,43.064],[-82.637,-91.981,-85.6666677316294,-86.0831876892028,-90.646,-110.883,-117.866008658009,-106.869998793727,-72.6509797979798,-75.6060009596929,-86.5173010130246,-82.507,-92.4008803571429,-113.766053097345,-90.5203170272813,-86.937,-97.221,-85.9672290406223,-92.04097597254,-70.729,-75.513,-68.3667746192893,-83.7440037453184,-94.0510196292257,-94.4950114942529,-90.4710035429584,-109.457023863636,-80.222,-96.178,-72.3049961389961,-74.3501562130177,-106.615435920578,-118.568984732824,-77.055993814433,-84.027,-95.8865547576302,-121.724052816901,-75.7249967611336,-71.2829991281604,-80.8000501043841,-98.413442206655,-88.9169966101695,-98.0459922705314,-114.034783225806,-76.4499728506787,-73.2489918699187,-89.628,-79.916,-106.721002247191,-86.782,-93.095,-111.339,-119.719,-105.51,-72.828,-75.467,-82.454,-83.6,-93.566,-116.101,-88.95,-86.375,-97.861,-84.77,-92.099,-71.021,-76.922,-69.667,-84.688,-94.507,-92.691,-90.078,-108.542,-79.101,-100.024,-98.314,-71.433,-74.816,-105.662,-117.09,-75.98,-83.115,-97.383,-122.872,-77.85,-71.412,-80.8,-100.285,-86.52,-98.196,-111.723,-78.438,-72.562,-122.287,-89.837,-80.274,-108.458],500,null,null,{"interactive":true,"className":"","stroke":true,"color":["#00FF00","#00FF00","#00FF00","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF"],"weight":5,"opacity":1,"fill":true,"fillColor":["#00FF00","#00FF00","#00FF00","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF"],"fillOpacity":1},null,null,["Closest Temp/Wind.sp/Atm.press","Closest Temp/Wind.sp/Atm.press","Closest Temp/Wind.sp/Atm.press","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addLegend","args":[{"colors":["#FF0000","#00FF00","#0000FF"],"labels":["Closest Euclidean","Closest Temp/Wind.sp/Atm.press","Mid-Point"],"na_color":null,"na_label":"NA","opacity":0.5,"position":"topleft","type":"factor","title":"type","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[28.474,48.39],"lng":[-122.872,-68.3667746192893]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-c15395e0b0026540c51a" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-c15395e0b0026540c51a">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["OpenStreetMap",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircles","args":[[37.751,45.506,31.3498977635783,33.9671876892028,35.831000967118,32.1669504405286,33.6799826839827,39.2299831121833,41.7360101010101,39.6740047984645,30.483,31.536,42.5535839285714,42.5420088495575,41.4632502351834,40.412,37.7460056980057,37.9003206568712,32.5159599542334,41.9099972527472,38.341,44.45,42.223,45.5430087241003,37.152,31.1829822852081,47.049,36.134,41.764,43.626,40.033,35.0399900722022,40.0679923664122,42.642987628866,40.708,36.1991113105925,42.1470528169014,41.3338032388664,41.5329991281604,33.9646951983298,45.443765323993,35.5930237288136,29.7089922705314,40.7208916129032,36.7829185520362,42.8939918699187,44.929,39.643,44.381,33.178,35.258,34.257,36.78,39.05,41.51,39.133,28.474,32.633,41.691,44.889,40.483,40.711,38.065,37.578,30.558,41.876,38.981,44.533,43.322,45.147,37.974,32.321,45.807,35.582,48.39,40.961,43.567,40.277,35.003,38.051,42.207,40.28,35.417,42.381,40.85,41.597,33.967,44.381,36.009,31.106,40.219,37.358,44.204,47.104,44.359,39,43.064],[-82.637,-91.981,-85.6666677316294,-86.0831876892028,-90.646,-110.883,-117.866008658009,-106.869998793727,-72.6509797979798,-75.6060009596929,-86.5173010130246,-82.507,-92.4008803571429,-113.766053097345,-90.5203170272813,-86.937,-97.221,-85.9672290406223,-92.04097597254,-70.729,-75.513,-68.3667746192893,-83.7440037453184,-94.0510196292257,-94.4950114942529,-90.4710035429584,-109.457023863636,-80.222,-96.178,-72.3049961389961,-74.3501562130177,-106.615435920578,-118.568984732824,-77.055993814433,-84.027,-95.8865547576302,-121.724052816901,-75.7249967611336,-71.2829991281604,-80.8000501043841,-98.413442206655,-88.9169966101695,-98.0459922705314,-114.034783225806,-76.4499728506787,-73.2489918699187,-89.628,-79.916,-106.721002247191,-86.782,-93.095,-111.339,-119.719,-105.51,-72.828,-75.467,-82.454,-83.6,-93.566,-116.101,-88.95,-86.375,-97.861,-84.77,-92.099,-71.021,-76.922,-69.667,-84.688,-94.507,-92.691,-90.078,-108.542,-79.101,-100.024,-98.314,-71.433,-74.816,-105.662,-117.09,-75.98,-83.115,-97.383,-122.872,-77.85,-71.412,-80.8,-100.285,-86.52,-98.196,-111.723,-78.438,-72.562,-122.287,-89.837,-80.274,-108.458],500,null,null,{"interactive":true,"className":"","stroke":true,"color":["#00FF00","#00FF00","#00FF00","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF"],"weight":5,"opacity":1,"fill":true,"fillColor":["#00FF00","#00FF00","#00FF00","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF"],"fillOpacity":1},null,null,["Closest Temp/Wind.sp/Atm.press","Closest Temp/Wind.sp/Atm.press","Closest Temp/Wind.sp/Atm.press","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addLegend","args":[{"colors":["#FF0000","#00FF00","#0000FF"],"labels":["Closest Euclidean","Closest Temp/Wind.sp/Atm.press","Mid-Point"],"na_color":null,"na_label":"NA","opacity":0.5,"position":"topleft","type":"factor","title":"type","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[28.474,48.39],"lng":[-122.872,-68.3667746192893]}},"evals":[],"jsHooks":[]}</script>
 
 Knit the doc and save it on GitHub.
 
@@ -609,6 +621,22 @@ to classify them according to the following criteria:
 - Mid: temp \>= 20 and temp \< 25
 - High: temp \>= 25
 
+``` r
+# Find the median station per state
+met_avg_temp_by_state_lz <- met_lz |>
+  group_by(STATE) |>
+  summarise(
+    across(
+      c(temp, wind.sp, atm.press),
+      function(x) mean(x, na.rm = TRUE)
+    )
+  )
+
+
+met_avg_temp_by_state_lz <- 
+  met_avg_temp_by_state_lz |> mutate(avg_temp := ifelse(temp < 20, 'low', ifelse(temp < 25, 'Mid', 'High')))
+```
+
 Once you are done with that, you can compute the following:
 
 - Number of entries (records),
@@ -618,6 +646,60 @@ Once you are done with that, you can compute the following:
 - Mean temperature, wind-speed, and atmospheric pressure.
 
 All by the levels described before.
+
+``` r
+# Merge the data created above with the whole dataset
+met_avg_lz_w_state <- merge(
+ x = met_avg_lz,
+ y = stations,
+ by.x = "USAFID",
+ by.y = "USAF",
+ all.x = TRUE,
+ all.y = FALSE
+ )
+
+# Merge again with the summary table above.
+met_avg_lz_w_state <- merge(
+ x = met_avg_lz_w_state,
+ y = met_avg_temp_by_state_lz,
+ by.x = "STATE",
+ by.y = "STATE",
+ all.x = TRUE,
+ all.y = FALSE
+ )
+
+q4_result <- met_avg_lz_w_state |>
+  group_by(avg_temp) |>
+  summarise(no_of_states = n_distinct(STATE), no_of_stations = n_distinct(USAFID), no_of_na = sum(is.na(temp.x) + is.na(wind.sp.x) + is.na(atm.press.x)), mean_temp = mean(temp.x, na.rm=T), mean_wind.sp = mean(wind.sp.x, na.rm=T), mean_atm.press = mean(atm.press.x, na.rm=T))
+
+
+# We also need to count number of total entries
+total_lz <- met
+
+state_avg_temp <- met_avg_temp_by_state_lz |> select('STATE', 'avg_temp')
+
+total_lz <- merge(
+  x = total_lz,
+  y = state_avg_temp,
+  by.x = 'STATE',
+  by.y = 'STATE',
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+count_by_avg_temp <- total_lz |>
+  group_by(avg_temp) |>
+  summarise(count = n())
+
+
+q4_result <- 
+  merge(
+  x = q4_result,
+  y = count_by_avg_temp,
+  by.x = 'avg_temp',
+  by.y = 'avg_temp'
+)
+```
 
 Knit the document, commit your changes, and push them to GitHub.
 

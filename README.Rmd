@@ -1,6 +1,8 @@
 ---
 title: "Lab 05 - Data Wrangling"
 output: 
+  html_document:
+    html_preview: false
   github_document: default
 always_allow_html: yes
 leafletmap: true

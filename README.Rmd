@@ -1,11 +1,12 @@
 ---
 title: "Lab 05 - Data Wrangling"
-output: 
+output:
   html_document:
-    html_preview: false
+    html_preview: no
+  pdf_document: default
   github_document: default
 always_allow_html: yes
-leafletmap: true
+leafletmap: yes
 ---
 
 # Learning goals
@@ -159,7 +160,7 @@ met_lz <- lazy_dt(met, immutable= FALSE)
 Across all weather stations, what is the median station in terms of temperature, wind speed, and atmospheric pressure? Look for the three weather stations that best represent continental US using the `quantile()` function. Do these three coincide?
 
 ```{r}
-
+# Get the mean statistics for each weather station
 met_avg_lz <- met_lz |>
   group_by(USAFID) |>
   summarise(
@@ -177,11 +178,10 @@ met_med_lz <- met_avg_lz |>
     2:4,
     function(x) quantile(x, probs = .5, na.rm = TRUE)
   ))
-
-met_med_lz
 ```
 
 ```{r}
+# Find the weather station whose average statistic is closest to the median.
 # temperature
 temp_us_id <- met_avg_lz |>
   mutate(d = abs(temp - met_med_lz |> pull(temp))) |>
@@ -206,13 +206,17 @@ atm_us_id <- met_avg_lz |>
 ```
 
 ```{r}
+# Present the results in a table
 met_avg_lz_q1 <- met_avg_lz |>
   select(USAFID, lon, lat) |>
   distinct() |> 
   filter(USAFID %in% c(temp_us_id, wsp_us_id, atm_us_id))
 
-met_avg_lz_q1
+as.data.table(met_avg_lz_q1)
+as.data.table(met_med_lz)
 ```
+
+Answer: From the table above, we can see median temperature, wind speed and atm. The other table shows the weather stations whose average is the closest to one of these three medians. The three weather stations are different, so they do not coincide.
 
 Knit the document, commit your changes, and save it on GitHub. Don't forget to add `README.md` to the tree, the first time you render it.
 
@@ -221,7 +225,6 @@ Knit the document, commit your changes, and save it on GitHub. Don't forget to a
 Just like the previous question, you are asked to identify what is the most representative, the median, station per state. This time, instead of looking at one variable at a time, look at the euclidean distance. If multiple stations show in the median, select the one located at the lowest latitude.
 
 ```{r}
-
 # Find the median station per state
 met_avg_by_state_lz <- met_lz |>
   group_by(STATE) |>
@@ -271,6 +274,7 @@ met_avg_by_USAFID <- merge(
 met_avg_by_USAFID <- met_avg_by_USAFID |>
   mutate(d = (temp.x - temp.y)^2 + (wind.sp.x - wind.sp.y)^2 + (atm.press.x - atm.press.y)^2) 
 
+# Show the results.
 met_avg_by_USAFID <- met_avg_by_USAFID |>
   group_by(STATE) |>
   slice(which.min(d))
@@ -278,7 +282,7 @@ met_avg_by_USAFID <- met_avg_by_USAFID |>
 met_avg_by_USAFID
 ```
 
-From the table above, it shows the weather station ID (USAFID) which has the most similar statistics to the median of each state. 
+From the table above, it shows the weather station ID (USAFID) which has the most similar statistics to the median of each state. The suffix "dot x" (.x) for the statistics is the statistics of the representing weather station, while the suffix "dot y" (.y) is the statistics for the each of the states.
 
 Knit the doc and save it on GitHub.
 
@@ -362,11 +366,13 @@ met_lat_lon$type <- 'Mid-Point'
 # Join the dataset
 q3_points <- rbind(as.data.table(met_avg_lz_q1), as.data.table(met_avg_by_USAFID), as.data.table(met_lat_lon))
 
+# Divide the points from Q1 to Q3 into three colors.
 pal <- colorFactor(
   palette = c('red', 'green', 'blue'),
   domain = q3_points$type
 )
 
+# Draw the map
 leaflet(q3_points) %>%
   addProviderTiles('OpenStreetMap') |>
   addCircles(lat = ~lat, lng = ~lon, color = ~pal(type),
@@ -376,6 +382,8 @@ leaflet(q3_points) %>%
   
 
 ```
+
+The map above shows dots of three colors. The blue dots show the weather stations which are the closest to the center of their state, among other stations in the same state; the red dot show the weather stations who have the most similar average temperature, wind speed and atm pressure to the average of their state; finally, the green dot shows the weather stations concerned in Q1, the ones which best represent continental US in terms of temperature, wind speed and atmospheric pressure.
 
 Knit the doc and save it on GitHub.
 
@@ -400,10 +408,9 @@ met_avg_temp_by_state_lz <- met_lz |>
     )
   )
 
-
+# Make a new variable.
 met_avg_temp_by_state_lz <- 
   met_avg_temp_by_state_lz |> mutate(avg_temp := ifelse(temp < 20, 'low', ifelse(temp < 25, 'Mid', 'High')))
-
 ```
 
 Once you are done with that, you can compute the following:
@@ -471,6 +478,8 @@ q4_result <-
 
 q4_result
 ```
+
+The table above shows the summary statistics of the weather stations in the US, grouped by whether the temperature of the states they stations are in have a high, mid or low average. The summary contains the number of states and stations for each group, as well as the number of NAs, and mean temperature, wind speed and atm. pressure for the states.
 
 Knit the document, commit your changes, and push them to GitHub. 
 

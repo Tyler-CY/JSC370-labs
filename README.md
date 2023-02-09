@@ -590,8 +590,8 @@ leaflet(q3_points) %>%
   addLegend(position = 'topleft', values = ~type, pal=pal)
 ```
 
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-bb4e3c375f25db749047" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-bb4e3c375f25db749047">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["OpenStreetMap",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircles","args":[[37.751,45.506,31.3498977635783,33.9671876892028,35.831000967118,32.1669504405286,33.6799826839827,39.2299831121833,41.7360101010101,39.6740047984645,30.483,31.536,42.5535839285714,42.5420088495575,41.4632502351834,40.412,37.7460056980057,37.9003206568712,32.5159599542334,41.9099972527472,38.341,44.45,42.223,45.5430087241003,37.152,31.1829822852081,47.049,36.134,41.764,43.626,40.033,35.0399900722022,40.0679923664122,42.642987628866,40.708,36.1991113105925,42.1470528169014,41.3338032388664,41.5329991281604,33.9646951983298,45.443765323993,35.5930237288136,29.7089922705314,40.7208916129032,36.7829185520362,42.8939918699187,44.929,39.643,44.381,33.178,35.258,34.257,36.78,39.05,41.51,39.133,28.474,32.633,41.691,44.889,40.483,40.711,38.065,37.578,30.558,41.876,38.981,44.533,43.322,45.147,37.974,32.321,45.807,35.582,48.39,40.961,43.567,40.277,35.003,38.051,42.207,40.28,35.417,42.381,40.85,41.597,33.967,44.381,36.009,31.106,40.219,37.358,44.204,47.104,44.359,39,43.064],[-82.637,-91.981,-85.6666677316294,-86.0831876892028,-90.646,-110.883,-117.866008658009,-106.869998793727,-72.6509797979798,-75.6060009596929,-86.5173010130246,-82.507,-92.4008803571429,-113.766053097345,-90.5203170272813,-86.937,-97.221,-85.9672290406223,-92.04097597254,-70.729,-75.513,-68.3667746192893,-83.7440037453184,-94.0510196292257,-94.4950114942529,-90.4710035429584,-109.457023863636,-80.222,-96.178,-72.3049961389961,-74.3501562130177,-106.615435920578,-118.568984732824,-77.055993814433,-84.027,-95.8865547576302,-121.724052816901,-75.7249967611336,-71.2829991281604,-80.8000501043841,-98.413442206655,-88.9169966101695,-98.0459922705314,-114.034783225806,-76.4499728506787,-73.2489918699187,-89.628,-79.916,-106.721002247191,-86.782,-93.095,-111.339,-119.719,-105.51,-72.828,-75.467,-82.454,-83.6,-93.566,-116.101,-88.95,-86.375,-97.861,-84.77,-92.099,-71.021,-76.922,-69.667,-84.688,-94.507,-92.691,-90.078,-108.542,-79.101,-100.024,-98.314,-71.433,-74.816,-105.662,-117.09,-75.98,-83.115,-97.383,-122.872,-77.85,-71.412,-80.8,-100.285,-86.52,-98.196,-111.723,-78.438,-72.562,-122.287,-89.837,-80.274,-108.458],500,null,null,{"interactive":true,"className":"","stroke":true,"color":["#00FF00","#00FF00","#00FF00","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF"],"weight":5,"opacity":1,"fill":true,"fillColor":["#00FF00","#00FF00","#00FF00","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF"],"fillOpacity":1},null,null,["Closest Temp/Wind.sp/Atm.press","Closest Temp/Wind.sp/Atm.press","Closest Temp/Wind.sp/Atm.press","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addLegend","args":[{"colors":["#FF0000","#00FF00","#0000FF"],"labels":["Closest Euclidean","Closest Temp/Wind.sp/Atm.press","Mid-Point"],"na_color":null,"na_label":"NA","opacity":0.5,"position":"topleft","type":"factor","title":"type","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[28.474,48.39],"lng":[-122.872,-68.3667746192893]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5ca07f75e6397fe9ece4" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5ca07f75e6397fe9ece4">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["OpenStreetMap",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircles","args":[[37.751,45.506,31.3498977635783,33.9671876892028,35.831000967118,32.1669504405286,33.6799826839827,39.2299831121833,41.7360101010101,39.6740047984645,30.483,31.536,42.5535839285714,42.5420088495575,41.4632502351834,40.412,37.7460056980057,37.9003206568712,32.5159599542334,41.9099972527472,38.341,44.45,42.223,45.5430087241003,37.152,31.1829822852081,47.049,36.134,41.764,43.626,40.033,35.0399900722022,40.0679923664122,42.642987628866,40.708,36.1991113105925,42.1470528169014,41.3338032388664,41.5329991281604,33.9646951983298,45.443765323993,35.5930237288136,29.7089922705314,40.7208916129032,36.7829185520362,42.8939918699187,44.929,39.643,44.381,33.178,35.258,34.257,36.78,39.05,41.51,39.133,28.474,32.633,41.691,44.889,40.483,40.711,38.065,37.578,30.558,41.876,38.981,44.533,43.322,45.147,37.974,32.321,45.807,35.582,48.39,40.961,43.567,40.277,35.003,38.051,42.207,40.28,35.417,42.381,40.85,41.597,33.967,44.381,36.009,31.106,40.219,37.358,44.204,47.104,44.359,39,43.064],[-82.637,-91.981,-85.6666677316294,-86.0831876892028,-90.646,-110.883,-117.866008658009,-106.869998793727,-72.6509797979798,-75.6060009596929,-86.5173010130246,-82.507,-92.4008803571429,-113.766053097345,-90.5203170272813,-86.937,-97.221,-85.9672290406223,-92.04097597254,-70.729,-75.513,-68.3667746192893,-83.7440037453184,-94.0510196292257,-94.4950114942529,-90.4710035429584,-109.457023863636,-80.222,-96.178,-72.3049961389961,-74.3501562130177,-106.615435920578,-118.568984732824,-77.055993814433,-84.027,-95.8865547576302,-121.724052816901,-75.7249967611336,-71.2829991281604,-80.8000501043841,-98.413442206655,-88.9169966101695,-98.0459922705314,-114.034783225806,-76.4499728506787,-73.2489918699187,-89.628,-79.916,-106.721002247191,-86.782,-93.095,-111.339,-119.719,-105.51,-72.828,-75.467,-82.454,-83.6,-93.566,-116.101,-88.95,-86.375,-97.861,-84.77,-92.099,-71.021,-76.922,-69.667,-84.688,-94.507,-92.691,-90.078,-108.542,-79.101,-100.024,-98.314,-71.433,-74.816,-105.662,-117.09,-75.98,-83.115,-97.383,-122.872,-77.85,-71.412,-80.8,-100.285,-86.52,-98.196,-111.723,-78.438,-72.562,-122.287,-89.837,-80.274,-108.458],500,null,null,{"interactive":true,"className":"","stroke":true,"color":["#00FF00","#00FF00","#00FF00","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF"],"weight":5,"opacity":1,"fill":true,"fillColor":["#00FF00","#00FF00","#00FF00","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF"],"fillOpacity":1},null,null,["Closest Temp/Wind.sp/Atm.press","Closest Temp/Wind.sp/Atm.press","Closest Temp/Wind.sp/Atm.press","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Closest Euclidean","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point","Mid-Point"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addLegend","args":[{"colors":["#FF0000","#00FF00","#0000FF"],"labels":["Closest Euclidean","Closest Temp/Wind.sp/Atm.press","Mid-Point"],"na_color":null,"na_label":"NA","opacity":0.5,"position":"topleft","type":"factor","title":"type","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[28.474,48.39],"lng":[-122.872,-68.3667746192893]}},"evals":[],"jsHooks":[]}</script>
 
 Knit the doc and save it on GitHub.
 
@@ -687,7 +687,18 @@ q4_result <-
   by.x = 'avg_temp',
   by.y = 'avg_temp'
 )
+
+q4_result
 ```
+
+    ##   avg_temp no_of_states no_of_stations no_of_na mean_temp mean_wind.sp
+    ## 1     High           12            555      264  27.81202     2.608408
+    ## 2      low           11            259      141  19.22394     2.767630
+    ## 3      Mid           25            781      309  22.57768     2.495189
+    ##   mean_atm.press   count
+    ## 1       1013.733  811126
+    ## 2       1014.365  430794
+    ## 3       1014.380 1135423
 
 Knit the document, commit your changes, and push them to GitHub.
 
@@ -701,6 +712,102 @@ need the `mgcv` package and `gam()` function to do this.
   Create a scatterplot of the two variables using ggplot2. Add both a
   linear regression line and a smooth line.
 
+``` r
+q5_data <- met_lz |>
+  group_by(USAFID) |>
+    summarise(across(
+    c('temp', 'wind.sp'),
+    function(x) quantile(x, probs = .5, na.rm = TRUE)
+  ))
+
+q5_data |> filter(!is.na(wind.sp) & !is.na(temp)) |> as.data.table() |> 
+  ggplot(aes(x = wind.sp, y = temp), na.rm) + geom_point() +
+  geom_smooth(method='loess', color = 'red', se = FALSE) +
+  geom_smooth(method='lm', formula = y ~ x, color='blue', se=FALSE) 
+```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
 - fit both a linear model and a spline model (use `gam()` with a cubic
   regression spline on wind speed). Summarize and plot the results from
   the models and interpret which model is the best fit and why.
+
+``` r
+q5_data_exploded <- q5_data |> filter(!is.na(wind.sp) & !is.na(temp)) |> as.data.table()
+
+# Linear Model
+lm_temp <- lm(temp ~ wind.sp, data=q5_data_exploded)
+summary(lm_temp)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = temp ~ wind.sp, data = q5_data_exploded)
+    ## 
+    ## Residuals:
+    ##      Min       1Q   Median       3Q      Max 
+    ## -17.7243  -2.6518  -0.2309   2.7691  14.5052 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept) 22.23088    0.21779  102.08  < 2e-16 ***
+    ## wind.sp      0.48614    0.08212    5.92 3.94e-09 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 3.849 on 1577 degrees of freedom
+    ## Multiple R-squared:  0.02174,    Adjusted R-squared:  0.02112 
+    ## F-statistic: 35.05 on 1 and 1577 DF,  p-value: 3.941e-09
+
+``` r
+q5_data_exploded |>
+    ggplot(aes(x = wind.sp, y = temp), na.rm=TRUE) + geom_point() +
+  geom_smooth(method='lm', formula = y ~ x, color='blue', se=FALSE)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+``` r
+# Spline model: a cubic regression spline
+gam_temp <- gam(temp~s(wind.sp, bs='cr', k=4), data=q5_data_exploded)
+plot(gam_temp)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+
+``` r
+summary(gam_temp)
+```
+
+    ## 
+    ## Family: gaussian 
+    ## Link function: identity 
+    ## 
+    ## Formula:
+    ## temp ~ s(wind.sp, bs = "cr", k = 4)
+    ## 
+    ## Parametric coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept) 23.38566    0.09548   244.9   <2e-16 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Approximate significance of smooth terms:
+    ##              edf Ref.df    F p-value    
+    ## s(wind.sp) 2.967  2.999 27.8  <2e-16 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## R-sq.(adj) =  0.0489   Deviance explained = 5.07%
+    ## GCV =  14.43  Scale est. = 14.393    n = 1579
+
+It is hard to decide which model fits better. On one hand, in the linear
+regression model, there is a few leverage points with large x values,
+which are influential on the regression coefficients. This might have
+made the adjusted R-squared (0.021) lower. On the other hand, the spline
+model captures the trend of the data points more closely, and this is
+supported by a higher adjusted R-squared value (0.0489). However, both
+adjusted R-squared values are quite low, so we should use caution when
+using either models.

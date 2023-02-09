@@ -4,9 +4,6 @@ output:
   github_document: default
 always_allow_html: yes
 leafletmap: true
-#   tufte::tufte_html:
-#     css: style.css
-# link-citations: yes
 ---
 
 # Learning goals
@@ -469,6 +466,8 @@ q4_result <-
   by.x = 'avg_temp',
   by.y = 'avg_temp'
 )
+
+q4_result
 ```
 
 Knit the document, commit your changes, and push them to GitHub. 
@@ -480,8 +479,40 @@ Let's practice running regression models with smooth functions on X. We need the
 
 - using your data with the median values per station, examine the association between median temperature (y) and median wind speed (x). Create a scatterplot of the two variables using ggplot2. Add both a linear regression line and a smooth line.
 
+```{r}
+q5_data <- met_lz |>
+  group_by(USAFID) |>
+    summarise(across(
+    c('temp', 'wind.sp'),
+    function(x) quantile(x, probs = .5, na.rm = TRUE)
+  ))
+
+q5_data |> filter(!is.na(wind.sp) & !is.na(temp)) |> as.data.table() |> 
+  ggplot(aes(x = wind.sp, y = temp), na.rm) + geom_point() +
+  geom_smooth(method='loess', color = 'red', se = FALSE) +
+  geom_smooth(method='lm', formula = y ~ x, color='blue', se=FALSE) 
+
+```
+
 - fit both a linear model and a spline model (use `gam()` with a cubic regression spline on wind speed). Summarize and plot the results from the models and interpret which model is the best fit and why.
 
 ```{r}
+q5_data_exploded <- q5_data |> filter(!is.na(wind.sp) & !is.na(temp)) |> as.data.table()
+
+# Linear Model
+lm_temp <- lm(temp ~ wind.sp, data=q5_data_exploded)
+summary(lm_temp)
+q5_data_exploded |>
+    ggplot(aes(x = wind.sp, y = temp), na.rm=TRUE) + geom_point() +
+  geom_smooth(method='lm', formula = y ~ x, color='blue', se=FALSE)
+```
+
+```{r}
+# Spline model: a cubic regression spline
+gam_temp <- gam(temp~s(wind.sp, bs='cr', k=4), data=q5_data_exploded)
+plot(gam_temp)
+summary(gam_temp)
 
 ```
+
+It is hard to decide which model fits better. On one hand, in the linear regression model, there is a few leverage points with large x values, which are influential on the regression coefficients. This might have made the adjusted R-squared (0.021) lower. On the other hand, the spline model captures the trend of the data points more closely, and this is supported by a higher adjusted R-squared value (0.0489). However, both adjusted R-squared values are quite low, so we should use caution when using either models.

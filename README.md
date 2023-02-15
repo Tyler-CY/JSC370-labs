@@ -286,13 +286,13 @@ Done! Knit the document, commit, and push.
 You can still share the HTML document on github. You can include a link
 in your `README.md` file as the following:
 
-``` md
+
 View [here](https://cdn.jsdelivr.net/gh/Tyler-CY/JSC370-labs/lab06/JSC370_lab06.html) 
-```
+
 
 For example, if we wanted to add a direct link the HTML page of lecture
 6, we could do something like the following:
 
-``` md
+
 View Week 6 Lecture [here](https://cdn.jsdelivr.net/gh/JSC370/jsc370-2023/slides/JSC370-slides-06.pdf)
-```
+
